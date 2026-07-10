@@ -41,3 +41,6 @@ export type {
   RoleStatus,
   UpdateRoleInput,
 } from "./types/role.types";
+
+export { ProtectedRouteByPermission } from "./guards/ProtectedRouteByPermission";
+export { default as RolesPage } from "./pages/RolesPage";
