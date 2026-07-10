@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { LogOut } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { useAuth, useCan } from "@/auth";
 import { navigationItems } from "@/app/navigation/navigationItems";
+import { useAuth, useCan } from "@/auth";
 import {
   AlertDialog,
   AlertDialogAction,

@@ -2,8 +2,8 @@ import React from "react";
 import { LogOut, Menu, PanelLeftClose, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { useAuth, useCan } from "@/auth";
 import { navigationItems } from "@/app/navigation/navigationItems";
+import { useAuth, useCan } from "@/auth";
 import { Button } from "@/shared/components/ui/button";
 import {
   Sidebar,
@@ -23,7 +23,7 @@ import { NavLink } from "./NavLink";
 
 export function AppSidebar() {
   const { logout } = useAuth();
-  const { can } = useCan();
+  const { can, loading } = useCan();
   const navigate = useNavigate();
 
   const { state, toggleSidebar, isMobile, setOpenMobile } = useSidebar();
@@ -92,28 +92,45 @@ export function AppSidebar() {
 
           <SidebarGroupContent>
             <SidebarMenu>
-              {visibleItems.map((item) => {
-                const Icon = item.icon;
+              {loading && (
+                <SidebarMenuItem>
+                  <div className="px-3 py-2 text-xs text-muted-foreground">
+                    Cargando permisos...
+                  </div>
+                </SidebarMenuItem>
+              )}
 
-                return (
-                  <SidebarMenuItem key={item.url}>
-                    <SidebarMenuButton asChild>
-                      <NavLink
-                        to={item.url}
-                        onClick={handleItemClick}
-                        className="flex items-center gap-3"
-                        activeClassName="bg-primary/10 text-primary"
-                      >
-                        <Icon className="h-5 w-5" />
+              {!loading &&
+                visibleItems.map((item) => {
+                  const Icon = item.icon;
 
-                        {(state === "expanded" || isMobile) && (
-                          <span>{item.title}</span>
-                        )}
-                      </NavLink>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
+                  return (
+                    <SidebarMenuItem key={item.url}>
+                      <SidebarMenuButton asChild>
+                        <NavLink
+                          to={item.url}
+                          onClick={handleItemClick}
+                          className="flex items-center gap-3"
+                          activeClassName="bg-primary/10 text-primary"
+                        >
+                          <Icon className="h-5 w-5" />
+
+                          {(state === "expanded" || isMobile) && (
+                            <span>{item.title}</span>
+                          )}
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+
+              {!loading && visibleItems.length === 0 && (
+                <SidebarMenuItem>
+                  <div className="px-3 py-2 text-xs text-muted-foreground">
+                    Sin módulos disponibles
+                  </div>
+                </SidebarMenuItem>
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
