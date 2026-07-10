@@ -40,7 +40,7 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         {state === "expanded" || isMobile ? (
           <div className="flex items-center justify-between px-3 py-3">
